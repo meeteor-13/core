@@ -28,22 +28,22 @@
 
 Run application:
 ```
-./gradlew bootRun
+./mvnw spring-boot:run
 ```
 
 Run tests:
 ```
-./gradlew test
+./mvnw test
 ```
 
 Build application artifact:
 ```
-./gradlew build
+./mvnw install
 ```
 
 Build application artifacts (without tests):
 ```
-./gradlew build -x test
+./mvnw -Dmaven.test.skip=true install
 ```
 
 ### Docker

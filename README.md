@@ -1,6 +1,6 @@
 # Core Service
 
-> Core functional service powered by Spring Boot
+> Core service powered by Spring Boot
 
 [![java version][java-image]][java-url]
 [![build status][travis-image]][travis-url]
@@ -18,7 +18,7 @@
 
 ## Technologies
 
-* [Java](https://www.oracle.com/technetwork/java/javase/overview/index.html)
+* [Java](https://openjdk.java.net/)
 * [Maven](https://maven.apache.org/)
 * [Spring](https://spring.io/)
 

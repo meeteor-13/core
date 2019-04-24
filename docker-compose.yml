@@ -6,7 +6,7 @@ services:
     image: meeteor13/core:latest
     build: .
     ports:
-      - 80:8080
+      - 80:80
     networks:
       - internal
 

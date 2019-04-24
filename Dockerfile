@@ -27,4 +27,4 @@ WORKDIR $WORK_DIR
 COPY --from=BUILDER $WORK_DIR/target/*.jar .
 
 EXPOSE $SERVER_PORT
-ENTRYPOINT ["/bin/sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/urandom -jar *.jar"]
+CMD java $JAVA_OPTS -Djava.security.egd=file:/dev/urandom -jar *.jar

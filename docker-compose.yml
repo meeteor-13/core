@@ -1,0 +1,15 @@
+
+version: "3.7"
+services:
+  core:
+    container_name: core
+    image: meeteor13/core:latest
+    build: .
+    ports:
+      - 8080:80
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge

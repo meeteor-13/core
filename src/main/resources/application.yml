@@ -7,6 +7,7 @@ spring:
   jpa:
     properties:
       hibernate:
+        # To support Postgresql 11
         temp.use_jdbc_metadata_defaults: false
         jdbc.lob.non_contextual_creation: true
 

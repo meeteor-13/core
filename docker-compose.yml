@@ -5,10 +5,31 @@ services:
     container_name: core
     image: meeteor13/core:latest
     build: .
+    depends_on:
+      - core-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://core-db:5432/meeteor13?user=meeteor13&password=meeteor13
     ports:
       - 8080:80
     networks:
       - internal
+
+  core-db:
+    container_name: core-db
+    image: postgres:11.2
+    environment:
+      POSTGRES_USER: meeteor13
+      POSTGRES_PASSWORD: meeteor13
+      POSTGRES_DB: meeteor13
+    ports:
+      - 5432:5432
+    networks:
+      - internal
+    volumes:
+      - core-db:/var/lib/postgresql
+
+volumes:
+  core-db:
 
 networks:
   internal:

@@ -1,2 +1,26 @@
 server:
   port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/meeteor13?user=meeteor13&password=meeteor13
+  jpa:
+    properties:
+      hibernate:
+        # To support Postgresql 11
+        temp.use_jdbc_metadata_defaults: false
+        jdbc.lob.non_contextual_creation: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - info
+          - health
+          - metrics
+          - prometheus
+
+logging:
+  level:
+    com.github.meeteor13.core: DEBUG

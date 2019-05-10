@@ -1,15 +1,20 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/meeteor13?user=meeteor13&password=meeteor13
+    url: jdbc:postgresql://localhost:5433/meeteor13?user=meeteor13&password=meeteor13
   jpa:
     properties:
       hibernate:
         # To support Postgresql 11
         temp.use_jdbc_metadata_defaults: false
         jdbc.lob.non_contextual_creation: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/auth/realms/meeteor13
 
 management:
   endpoints:

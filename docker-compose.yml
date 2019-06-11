@@ -1,6 +1,20 @@
 
 version: "3.7"
 services:
+  core-db:
+    container_name: core-db
+    image: postgres:11.2
+    environment:
+      POSTGRES_USER: meeteor13
+      POSTGRES_PASSWORD: meeteor13
+      POSTGRES_DB: meeteor13
+    ports:
+      - 5432:5432
+    networks:
+      - internal
+    volumes:
+      - core-db-data:/var/lib/postgresql
+
   core:
     container_name: core
     image: meeteor13/core:latest
@@ -14,22 +28,8 @@ services:
     networks:
       - internal
 
-  core-db:
-    container_name: core-db
-    image: postgres:11.2
-    environment:
-      POSTGRES_USER: meeteor13
-      POSTGRES_PASSWORD: meeteor13
-      POSTGRES_DB: meeteor13
-    ports:
-      - 5432:5432
-    networks:
-      - internal
-    volumes:
-      - core-db:/var/lib/postgresql
-
 volumes:
-  core-db:
+  core-db-data:
 
 networks:
   internal:

@@ -2,14 +2,9 @@ server:
   port: 8080
 
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/meeteor13?user=meeteor13&password=meeteor13
-  jpa:
-    properties:
-      hibernate:
-        # To support Postgresql 11
-        temp.use_jdbc_metadata_defaults: false
-        jdbc.lob.non_contextual_creation: true
+  data:
+    mongodb:
+      uri: mongodb://meeteor13:meeteor13@localhost:27017/meeteor13
 
 management:
   endpoints:

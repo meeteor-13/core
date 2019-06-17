@@ -1,14 +1,14 @@
 package com.github.meeteor13.core.domain;
 
-import com.mongodb.client.model.geojson.Point;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.Builder;
+import lombok.Getter;
+import org.springframework.data.geo.Point;
 
 import java.time.LocalDateTime;
 
-@Data
-@Accessors(chain = true)
+@Getter
+@Builder
 public class Location {
-    private LocalDateTime date;
-    private Point point;
+    private final LocalDateTime date;
+    private final Point point;
 }

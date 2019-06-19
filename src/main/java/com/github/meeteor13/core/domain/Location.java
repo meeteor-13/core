@@ -4,11 +4,11 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.geo.Point;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Builder
 public class Location {
-    private final LocalDateTime date;
+    private final LocalDate date;
     private final Point point;
 }

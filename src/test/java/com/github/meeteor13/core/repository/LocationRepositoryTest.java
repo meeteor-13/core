@@ -8,7 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.geo.Point;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDate;
+import java.time.Instant;
+import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,12 +22,14 @@ public class LocationRepositoryTest {
 
     @Test
     public void saveTest() {
-        final Location saved = repository.save(Location
-            .builder()
-            .userId(1L)
-            .date(LocalDate.now())
-            .point(new Point(2, 3))
-            .build()).block();
+        final Location saved = repository
+            .save(Location
+                .builder()
+                .userId(1L)
+                .date(Date.from(Instant.now()))
+                .point(new Point(2, 3))
+                .build())
+            .block();
         final Location found = repository.findById(saved.getId()).block();
         assertThat(found).isEqualToComparingFieldByFieldRecursively(saved);
     }

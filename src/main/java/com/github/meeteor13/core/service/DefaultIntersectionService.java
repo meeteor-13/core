@@ -1,9 +1,9 @@
 package com.github.meeteor13.core.service;
 
 import com.github.meeteor13.core.domain.Intersection;
-import com.github.meeteor13.core.domain.User;
+import com.github.meeteor13.core.domain.Location;
 import com.github.meeteor13.core.repository.IntersectionRepository;
-import com.github.meeteor13.core.repository.UserRepository;
+import com.github.meeteor13.core.repository.LocationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -17,7 +17,7 @@ import java.time.Period;
 @RequiredArgsConstructor
 public class DefaultIntersectionService implements IntersectionService {
 
-    private final UserRepository userRepository;
+    private final LocationRepository locationRepository;
     private final IntersectionRepository intersectionRepository;
     private final ReactiveMongoOperations mongoTemplate;
 
@@ -33,7 +33,7 @@ public class DefaultIntersectionService implements IntersectionService {
             Aggregation.newAggregation(
                 //TODO add operators
             ),
-            User.class,
+            Location.class,
             Intersection.class
         );
     }

@@ -1,18 +1,20 @@
 package com.github.meeteor13.core.domain;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.geo.Point;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
-@Getter
-@EqualsAndHashCode
-@ToString
+@Document
+@Data
 @Builder
 public class Location {
-    private final LocalDate date;
-    private final Point point;
+    @Id
+    private String id;
+    private Long userId;
+    private LocalDate date;
+    private Point point;
 }

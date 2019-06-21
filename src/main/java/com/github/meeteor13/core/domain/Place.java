@@ -1,17 +1,13 @@
 package com.github.meeteor13.core.domain;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-@Getter
-@EqualsAndHashCode
-@ToString
+@Data
 @Builder
 public class Place {
     @Id

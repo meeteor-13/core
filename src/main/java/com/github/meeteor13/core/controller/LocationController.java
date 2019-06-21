@@ -15,6 +15,11 @@ public class LocationController {
     private final LocationRepository locationRepository;
 
     @GetMapping
+    public Flux<Location> findAll() {
+        return locationRepository.findAll();
+    }
+
+    @GetMapping(params = {"userId"})
     public Flux<Location> findAllByUserId(@RequestParam Long userId) {
         return locationRepository.findAllByUserId(userId);
     }

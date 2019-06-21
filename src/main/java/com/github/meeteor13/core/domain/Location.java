@@ -1,6 +1,5 @@
 package com.github.meeteor13.core.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -16,7 +15,6 @@ import java.util.Date;
 @Builder
 public class Location {
     @Id
-    @JsonIgnore
     private String id;
     private Long userId;
     private Date date;

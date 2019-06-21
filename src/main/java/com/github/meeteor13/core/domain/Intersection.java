@@ -4,9 +4,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.Set;
 
 @Document
 @Data
@@ -15,7 +16,7 @@ import java.util.List;
 public class Intersection {
     @Id
     private String id;
-    private Location location;
-    private List<Long> users;
+    private Set<Long> users;
+    private Point point;
     private Place place;
 }

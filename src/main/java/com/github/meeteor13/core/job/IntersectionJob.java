@@ -8,7 +8,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
-import java.time.Period;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
@@ -19,7 +21,12 @@ public class IntersectionJob {
 
     @Scheduled(cron = "${application.jobs.intersection.cron}")
     public void run() {
-        final Flux<Intersection> intersections = service.calculate(Period.ofDays(3));
+        final LocalDateTime currentDate = LocalDateTime.now();
+        final LocalDateTime startDate = currentDate.minusDays(3);
+        final Flux<Intersection> intersections = service.calculate(
+            new Date(startDate.toInstant(ZoneOffset.UTC).toEpochMilli()),
+            new Date(currentDate.toInstant(ZoneOffset.UTC).toEpochMilli())
+        );
         repository.saveAll(intersections);
     }
 }

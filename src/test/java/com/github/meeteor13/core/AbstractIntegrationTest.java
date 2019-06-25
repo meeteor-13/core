@@ -9,7 +9,7 @@ import org.testcontainers.containers.wait.strategy.Wait;
 
 @SpringBootTest
 @Slf4j
-public class AbstractIntegrationTest {
+public abstract class AbstractIntegrationTest {
 
     private static final GenericContainer DB = mongoDbContainer();
 

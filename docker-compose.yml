@@ -7,6 +7,7 @@ services:
       MONGODB_USERNAME: meeteor13
       MONGODB_PASSWORD: meeteor13
       MONGODB_DATABASE: meeteor13
+    restart: on-failure
     ports:
       - 27017:27017
     networks:
@@ -17,11 +18,15 @@ services:
   core:
     container_name: core
     image: meeteor13/core:latest
-    build: .
+    build:
+      context: .
+      target: prod
     depends_on:
       - core-db
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://meeteor13:meeteor13@core-db:27017/meeteor13
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://authorization:8080/auth/realms/meeteor13
+    restart: on-failure
     ports:
       - 8080:80
     networks:

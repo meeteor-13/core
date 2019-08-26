@@ -1,6 +1,6 @@
 package com.github.meeteor13.core.converter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,18 +9,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import reactor.core.publisher.Mono;
 
-import javax.validation.constraints.NotNull;
-import java.io.IOException;
 import java.util.Collection;
-import java.util.LinkedHashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 // It can be in third party meeteor library in future,
 // when there will be much more services
 // Thanks spring a lot
+@Slf4j
 public class LibraryUserRolesJwtAuthenticationConverter
     implements Converter<Jwt, Mono<AbstractAuthenticationToken>> {
 
@@ -38,34 +38,19 @@ public class LibraryUserRolesJwtAuthenticationConverter
 
     @Override
     public Mono<AbstractAuthenticationToken> convert(final Jwt source) {
-        final Collection<GrantedAuthority> authorities = extractAuthorities(source);
+        final Collection<GrantedAuthority> authorities = Optional
+            .ofNullable(source.getClaimAsMap(RESOURCE_ACCESS_CLAIMS))
+            .map(it -> ((Map<String, List<String>>) it.get(RESOURCE_ID)))
+            .map(it -> it.get(RESOURCE_ROLES_KEY))
+            .orElseGet(Collections::emptyList)
+            .stream()
+            .map(a -> String.format("%s%s", ROLE_PREFIX, a.toUpperCase(Locale.getDefault())))
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toList());
 
         final UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(source.getSubject(), "n/a", authorities);
 
         return Mono.just(authenticationToken);
-    }
-
-    private Collection<GrantedAuthority> extractAuthorities(final Jwt source) {
-        return this.getRolesFromResourceAccess(source).stream()
-            .map(authority -> ROLE_PREFIX + authority.toUpperCase(Locale.getDefault()))
-            .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toList());
-    }
-
-    @NotNull
-    private List<String> getRolesFromResourceAccess(final Jwt source) {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        LinkedHashMap<String, List<String>> resourceRoles = new LinkedHashMap<>();
-        try {
-            resourceRoles = (LinkedHashMap<String, List<String>>)
-                objectMapper
-                    .readValue(source.getClaimAsString(RESOURCE_ACCESS_CLAIMS), Map.class)
-                    .get(RESOURCE_ID);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return resourceRoles.get(RESOURCE_ROLES_KEY);
     }
 }

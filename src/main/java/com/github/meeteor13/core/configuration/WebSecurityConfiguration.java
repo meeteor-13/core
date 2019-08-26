@@ -16,13 +16,14 @@ public class WebSecurityConfiguration {
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        http.csrf().disable();
+        http
+            .csrf().disable()
+            .httpBasic().disable()
+            .formLogin().disable();
 
         http.authorizeExchange()
-            .matchers(PathRequest.toStaticResources().atCommonLocations())
-            .permitAll();
-
-        http.authorizeExchange()
+            .matchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+            .pathMatchers("/actuator/**").permitAll()
             .anyExchange().authenticated();
 
         http.oauth2ResourceServer()

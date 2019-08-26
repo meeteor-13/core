@@ -1,34 +1,39 @@
 version: "3.7"
 services:
-  core-db:
-    container_name: core-db
+  core_db:
+    container_name: core_db
     image: bitnami/mongodb:4.1.13-debian-9-r12
     environment:
       MONGODB_USERNAME: meeteor13
       MONGODB_PASSWORD: meeteor13
       MONGODB_DATABASE: meeteor13
+    restart: on-failure
     ports:
       - 27017:27017
     networks:
       - internal
     volumes:
-      - core-db-data:/bitnami
+      - core_db_data:/bitnami
 
   core:
     container_name: core
     image: meeteor13/core:latest
-    build: .
+    build:
+      context: .
+      target: prod
     depends_on:
-      - core-db
+      - core_db
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://meeteor13:meeteor13@core-db:27017/meeteor13
+      SPRING_DATA_MONGODB_URI: mongodb://meeteor13:meeteor13@core_db:27017/meeteor13
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://authorization:8080/auth/realms/meeteor13
+    restart: on-failure
     ports:
       - 8080:80
     networks:
       - internal
 
 volumes:
-  core-db-data:
+  core_db_data:
 
 networks:
   internal:

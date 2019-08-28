@@ -4,6 +4,7 @@ import com.github.meeteor13.core.domain.Intersection;
 import com.github.meeteor13.core.repository.IntersectionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ public class IntersectionController {
 
     private final IntersectionRepository intersectionRepository;
 
+    @PreAuthorize("hasRole('INTERSECTION_READ')")
     @GetMapping(
         produces = {
             MediaType.APPLICATION_JSON_UTF8_VALUE,
@@ -27,6 +29,7 @@ public class IntersectionController {
         return intersectionRepository.findAll();
     }
 
+    @PreAuthorize("hasRole('INTERSECTION_READ')")
     @GetMapping(
         params = {
             "userId"
